@@ -12,9 +12,11 @@
     .top-bar {
       background-color: #764ba2;
       color: white;
-      padding: 20px 30px; /* increased padding for better touch size */
-      font-size: 1.2rem;   /* increased font size for readability */
+      padding: 20px 30px;
       text-align: right;
+    }
+    #userEmail {
+      font-size: 0.9rem;
     }
   </style>
 </head>
@@ -25,7 +27,15 @@
 
   <script>
     const email = localStorage.getItem('user_email');
-    document.getElementById('userEmail').textContent = email ? email : 'Not logged in';
+    if (!email) {
+      document.body.style.backgroundColor = 'black';
+      document.body.innerHTML = '';
+      setTimeout(() => {
+        window.location.href = 'https://milo-is-cooked.github.io/ddom/';
+      }, 1000);
+    } else {
+      document.getElementById('userEmail').textContent = email;
+    }
   </script>
 </body>
 </html>
