@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Main Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+    }
+    .top-bar {
+      background-color: #764ba2;
+      color: white;
+      padding: 20px 30px; /* increased padding for better touch size */
+      font-size: 1.2rem;   /* increased font size for readability */
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <span id="userEmail"></span>
+  </div>
+
+  <script>
+    const email = localStorage.getItem('user_email');
+    document.getElementById('userEmail').textContent = email ? email : 'Not logged in';
+  </script>
+</body>
+</html>
