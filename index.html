@@ -16,7 +16,7 @@
             height: 100vh;
             color: #333;
         }
-        
+
         .login-container {
             background-color: white;
             border-radius: 10px;
@@ -25,24 +25,24 @@
             width: 350px;
             text-align: center;
         }
-        
+
         h1 {
             color: #764ba2;
             margin-bottom: 30px;
             font-weight: 600;
         }
-        
+
         .form-group {
             margin-bottom: 20px;
             text-align: left;
         }
-        
+
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
         }
-        
+
         input {
             width: 100%;
             padding: 12px;
@@ -52,19 +52,19 @@
             box-sizing: border-box;
             transition: border 0.3s;
         }
-        
+
         input:focus {
             border-color: #764ba2;
             outline: none;
         }
-        
+
         .error {
             color: #e74c3c;
             font-size: 14px;
             margin-top: 5px;
             display: none;
         }
-        
+
         button {
             background-color: #764ba2;
             color: white;
@@ -77,16 +77,16 @@
             transition: all 0.3s;
             margin-top: 10px;
         }
-        
+
         button:hover {
             background-color: #5d3a7e;
         }
-        
+
         button.glow {
             animation: glow 1.5s infinite alternate;
             box-shadow: 0 0 10px #764ba2;
         }
-        
+
         @keyframes glow {
             from {
                 box-shadow: 0 0 10px #764ba2;
@@ -95,7 +95,7 @@
                 box-shadow: 0 0 20px #764ba2, 0 0 30px #667eea;
             }
         }
-        
+
         .success-message {
             color: #2ecc71;
             margin-top: 20px;
@@ -106,93 +106,60 @@
 <body>
     <div class="login-container">
         <h1>Create Your Account</h1>
-        
-        <form id="loginForm">
+        <form id="signupForm">
             <div class="form-group">
                 <label for="email">Email Address</label>
                 <input type="email" id="email" name="email" required placeholder="Enter your email">
                 <div id="emailError" class="error">Please enter a valid email address</div>
             </div>
-            
+
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required placeholder="Create a password">
             </div>
-            
+
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
                 <div id="passwordError" class="error">Passwords do not match</div>
             </div>
-            
+
             <button type="submit" id="submitBtn">Sign Up</button>
-            <button type="button" id="successBtn" class="glow" style="display: none;">Continue to Dashboard</button>
-            
-            <div id="successMessage" class="success-message">
-                Account created successfully! Check your email for verification.
-            </div>
         </form>
     </div>
 
-    <!-- Load EmailJS SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
-        // Initialize EmailJS with your Public Key
-        emailjs.init('FnVAHtdzis0LrOnBm'); // Replace with your key
-
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const email = document.getElementById('email').value;
+
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-            
+
             // Reset errors
             document.getElementById('emailError').style.display = 'none';
             document.getElementById('passwordError').style.display = 'none';
-            
+
             let isValid = true;
-            
-            // Email validation
-            if (!validateEmail(email)) {
+
+            // Basic email validation
+            if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
                 document.getElementById('emailError').style.display = 'block';
                 isValid = false;
             }
-            
+
             // Password match validation
             if (password !== confirmPassword) {
                 document.getElementById('passwordError').style.display = 'block';
                 isValid = false;
             }
-            
+
             if (isValid) {
-                // Show success state
-                document.getElementById('submitBtn').style.display = 'none';
-                document.getElementById('successBtn').style.display = 'block';
-                document.getElementById('successMessage').style.display = 'block';
-                
-                // Send welcome email via EmailJS
-                try {
-                    await emailjs.send("service_17bl0v8", "template_3l5wzdr", {
-                        to_email: email,
-                        verify_link: "https://yourwebsite.com/verify"
-                    });
-                    console.log("Email sent successfully!");
-                } catch (error) {
-                    console.error("Failed to send email:", error);
-                }
+                // Store email and redirect
+                localStorage.setItem('user_email', email);
+                window.location.href = 'main.html';
             }
         });
-        
-        document.getElementById('successBtn').addEventListener('click', function() {
-            // Redirect to dashboard
-            window.location.href = 'dashboard.html';
-        });
-        
-        function validateEmail(email) {
-            const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            return re.test(String(email).toLowerCase());
-        }
     </script>
 </body>
 </html>
