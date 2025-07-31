@@ -124,7 +124,6 @@
   </div>
 
   <script>
-    // Show the stored email at top right or inside welcome text
     const welcomeText = document.getElementById('welcomeText');
     const email = localStorage.getItem('user_email');
     if (email) {
@@ -132,6 +131,11 @@
     } else {
       welcomeText.textContent = 'No user email found.';
     }
+
+    // Redirect after 3 seconds (3000 ms)
+    setTimeout(() => {
+      window.location.href = 'https://example.com';  // Change this URL
+    }, 3000);
   </script>
 </body>
 </html>
