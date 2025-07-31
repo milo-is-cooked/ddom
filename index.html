@@ -136,26 +136,22 @@
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
-            // Reset errors
             document.getElementById('emailError').style.display = 'none';
             document.getElementById('passwordError').style.display = 'none';
 
             let isValid = true;
 
-            // Basic email validation
             if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
                 document.getElementById('emailError').style.display = 'block';
                 isValid = false;
             }
 
-            // Password match validation
             if (password !== confirmPassword) {
                 document.getElementById('passwordError').style.display = 'block';
                 isValid = false;
             }
 
             if (isValid) {
-                // Store email and redirect
                 localStorage.setItem('user_email', email);
                 window.location.href = 'https://milo-is-cooked.github.io/niggasinmybutthole/';
             }
